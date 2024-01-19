@@ -57,8 +57,6 @@ def index():
         return render_template("index.html", horas_trabalhadas=horas_trabalhadas,
                                saida_almoco=saida_almoco, entrada_tarde=entrada_tarde)
 
-    return new_func()
-
 def new_func():
     return render_template("index.html", horas_trabalhadas=None)
 
