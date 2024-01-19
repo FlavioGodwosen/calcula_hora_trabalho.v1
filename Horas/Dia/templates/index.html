@@ -65,11 +65,9 @@
   </form>
 
   
-  <div id="resultado"
-    style="margin-top: 20px; padding: 10px; background-color: #ffd900; color: #000; font-size: 18px;">
-    <strong>Horas trabalhadas no dia:</strong> 
-  </div>
-  
+  {% if horas_trabalhadas is not none %}
+  <p id="resultado">Horas trabalhadas no dia: {{ horas_trabalhadas }}</p>
+  {% endif %}
 
 
   <script>
