@@ -8,7 +8,7 @@ db = SQLAlchemy(app)
 
 class Registro(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    data = db.Column(db.String(19), default=datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'), nullable=False)
     entrada_manha = db.Column(db.String(5), nullable=False)
     saida_almoco = db.Column(db.String(5), default='12:00', nullable=False)
     entrada_tarde = db.Column(db.String(5), default='13:00', nullable=False)
