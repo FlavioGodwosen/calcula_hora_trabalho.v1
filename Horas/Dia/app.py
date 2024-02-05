@@ -31,7 +31,7 @@ def calcular_horas_trabalhadas(entrada_manha, saida_noite):
     saida_noite = datetime.strptime(saida_noite, formato_hora)
 
     horas_manha = (saida_almoco - entrada_manha).total_seconds() / 3600
-    horas_almoco = (entrada_tarde - saida_almoco).total_seconds() / 3600
+    horas_almoco = 0
     horas_tarde = (saida_noite - entrada_tarde).total_seconds() / 3600
 
     total_horas_trabalhadas = horas_manha + horas_almoco + horas_tarde
