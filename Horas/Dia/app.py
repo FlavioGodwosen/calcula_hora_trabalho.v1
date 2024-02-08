@@ -1,3 +1,4 @@
+from decimal import Decimal
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -16,12 +17,11 @@ class Registro(db.Model):
     saida_almoco = db.Column(db.String(5), default='12:00', nullable=False)
     entrada_tarde = db.Column(db.String(5), default='13:00', nullable=False)
     saida_noite = db.Column(db.String(5), nullable=False)
-    total_horas = db.Column(db.String(5), nullable=True)
+    total_horas = db.Column(db.Numeric(precision=5, scale=2), nullable=True)
 
 def calcular_horas_trabalhadas(entrada_manha, saida_noite):
     formato_hora = "%H:%M"
 
-    # Valores fixos para saída almoço e entrada tarde
     saida_almoco = "12:00"
     entrada_tarde = "13:00"
 
@@ -36,7 +36,7 @@ def calcular_horas_trabalhadas(entrada_manha, saida_noite):
 
     total_horas_trabalhadas = horas_manha + horas_almoco + horas_tarde
 
-    return total_horas_trabalhadas
+    return Decimal(str(total_horas_trabalhadas))
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -47,7 +47,7 @@ def index():
         try:
             horas_trabalhadas = calcular_horas_trabalhadas(entrada_manha, saida_noite)
         except Exception as e:
-            # Trate o erro aqui (pode ser um print, log, etc.)
+            
             print(f"Erro ao calcular horas trabalhadas: {e}")
             horas_trabalhadas = None
 
@@ -55,7 +55,6 @@ def index():
         db.session.add(novo_registro)
         db.session.commit()
 
-        # Defina os valores fixos antes de renderizar o template
         saida_almoco = "12:00"
         entrada_tarde = "13:00"
 
