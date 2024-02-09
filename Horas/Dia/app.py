@@ -17,7 +17,7 @@ class Registro(db.Model):
     saida_almoco = db.Column(db.String(5), default='12:00', nullable=False)
     entrada_tarde = db.Column(db.String(5), default='13:00', nullable=False)
     saida_noite = db.Column(db.String(5), nullable=False)
-    total_horas = db.Column(db.Numeric(precision=5, scale=2), nullable=True)
+    total_horas = db.Column(db.Numeric(precision=4, scale=2), nullable=True)  # Usando Decimal
 
 def calcular_horas_trabalhadas(entrada_manha, saida_noite):
     formato_hora = "%H:%M"
@@ -36,7 +36,7 @@ def calcular_horas_trabalhadas(entrada_manha, saida_noite):
 
     total_horas_trabalhadas = horas_manha + horas_almoco + horas_tarde
 
-    return Decimal(str(total_horas_trabalhadas))
+    return Decimal(str(total_horas_trabalhadas))  # Convertendo para Decimal
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -47,7 +47,7 @@ def index():
         try:
             horas_trabalhadas = calcular_horas_trabalhadas(entrada_manha, saida_noite)
         except Exception as e:
-            
+          
             print(f"Erro ao calcular horas trabalhadas: {e}")
             horas_trabalhadas = None
 
@@ -68,3 +68,4 @@ def new_func():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
